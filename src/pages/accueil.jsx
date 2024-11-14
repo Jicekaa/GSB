@@ -1,7 +1,7 @@
 function Accueil(){
     return (
         <>
-            <h1>bienvenue à l'accueil</h1>
+            <h1>bienvenue à l'accueil xd</h1>
         </>
     )
 }
