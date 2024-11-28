@@ -16,25 +16,23 @@ function Index(){
     function handleSubmit(event) {
         event.preventDefault() /*évite de charger la page*/
 
-        // On stocke les valeurs des champs de saisie
+        // On récup et on stocke les valeurs des champs de saisie
         const formData = new FormData(event.currentTarget);
         const login = formData.get("login");
         const mdp = formData.get("mdp");
-        console.log(login) //test qui récupère bien ce qu'il y a dans les champs
-        console.log(mdp)
+        //console.log(login) //test qui récupère bien ce qu'il y a dans les champs
+        //console.log(mdp)
 
 
         //appel à la fct
-        getUser(login, mdp)
-        .then((response)=> {
+        getUser(login, mdp).then((response)=> {
             
             if (response.data != null) {
                 //fonction navigate qui redirige vers ma page accueil
                 navigate('/Accueil');
                 console.log("Connexion réussie : ", response.data);
-
-            
             } else {
+                console.log("login / mdp pas bon chef");
                 setErreurLogin(true); //si erreur de saisie //fonctionne pas
                                      //affiche bannière erreurlogin
             }
@@ -42,27 +40,26 @@ function Index(){
         })
         .catch((error) => { 
             console.error("Erreur de connexion : ", error); //fonctionne
-            setErreurLogin(true);
         });
     }
 
 
-        //retourne une promesse ou affiche erreur
-        //note à moi : cette fonction se met après l'appel
-        async function getUser(leLogin, leMdp) {
-            try {
-                const response = await api.get('/connexion', {
-                    params:{
-                        login : leLogin,
-                        mdp : leMdp
-                    },
-                });
-                return "Connexion à l'api",response;
-            }
-            catch (error) {
-                console.log("Erreur connexion API");
-            }
+    //retourne une promesse ou affiche erreur
+    //note pour moi : cette fonction se met en dehors de la fonction du dessus
+    async function getUser(leLogin, leMdp) {
+        try {
+            const response = await api.get('/connexion', {
+                params:{
+                    login : leLogin,
+                    mdp : leMdp
+                },
+            });
+            return "Connexion à l'api",response;
         }
+        catch (error) {
+            console.log("Erreur connexion API");
+        }
+    }
 
     
 
@@ -89,7 +86,7 @@ function Index(){
                 
                 {/*Bannière d'erreur de login*/}
                 <div>
-                    <ErreurLogin/>
+                    <ErreurLogin visible={erreurlogin}/> {/*fonctionne bien*/}
                 </div>
             
             </form>
