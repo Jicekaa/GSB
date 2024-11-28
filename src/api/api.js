@@ -8,17 +8,4 @@ const api = axios.create({
 
 export default api;
 
-async function getUser(leLogin, leMdp) {
-    try {
-        const response = await api.get('/connexion', {
-            params:{
-                login : leLogin,
-                mdp : leMdp
-            },
-        });
-        return response;
-    }
-    catch (error) {
-        console.log("Erreur connexion API")
-    }
-}
+

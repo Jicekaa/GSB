@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import ErreurLogin from "../composants/erreurlogin";
 import { useNavigate } from "react-router-dom";
-import getUser from "../api/api";
+import api from "../api/api";
 
 
 
@@ -17,31 +17,55 @@ function Index(){
         event.preventDefault() /*évite de charger la page*/
 
         // On stocke les valeurs des champs de saisie
-        const formData = new FormData(form.current);
+        const formData = new FormData(event.currentTarget);
         const login = formData.get("login");
         const mdp = formData.get("mdp");
+        console.log(login) //test qui récupère bien ce qu'il y a dans les champs
+        console.log(mdp)
 
 
+        //appel à la fct
         getUser(login, mdp)
         .then((response)=> {
+            
             if (response.data != null) {
                 //fonction navigate qui redirige vers ma page accueil
-                
                 navigate('/Accueil');
                 console.log("Connexion réussie : ", response.data);
+
+            
             } else {
-                setErreurLogin(true); //si erreur de saisie
+                setErreurLogin(true); //si erreur de saisie //fonctionne pas
                                      //affiche bannière erreurlogin
             }
+
         })
         .catch((error) => { 
-            console.error("Erreur connexion : ", error);
+            console.error("Erreur de connexion : ", error); //fonctionne
             setErreurLogin(true);
         });
     }
 
+
+        //retourne une promesse ou affiche erreur
+        //note à moi : cette fonction se met après l'appel
+        async function getUser(leLogin, leMdp) {
+            try {
+                const response = await api.get('/connexion', {
+                    params:{
+                        login : leLogin,
+                        mdp : leMdp
+                    },
+                });
+                return "Connexion à l'api",response;
+            }
+            catch (error) {
+                console.log("Erreur connexion API");
+            }
+        }
+
     
-    
+
 
     return (
         <>
