@@ -1,8 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+//note pour moi : tjr importer les différentes pages ici
 import Index from './pages/index.jsx'
 import Accueil from './pages/accueil/accueil.jsx'
+import Medecins from './pages/accueil/medecins.jsx'
+import Rapports from './pages/accueil/rapports.jsx'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -13,8 +17,23 @@ const router = createBrowserRouter([
 
   {
     path: '/accueil',
-    element: <Accueil />
+    element: <Accueil />,
+
+    children: [
+      {
+        path : 'medecins',
+        element: <Medecins />
+      },
+    
+      {
+        path : 'rapports',
+        element: <Rapports />
+      },
+    ]
+
   },
+
+  
 
 ]);
 
