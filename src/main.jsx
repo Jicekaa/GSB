@@ -19,6 +19,7 @@ const router = createBrowserRouter([
     path: '/accueil',
     element: <Accueil />,
 
+    // enfant du composant accueil qui va hériter de la barre de navigation etc
     children: [
       {
         path : 'medecins',

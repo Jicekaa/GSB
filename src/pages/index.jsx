@@ -29,7 +29,9 @@ function Index(){
             
             if (response.data != null) {
                 //fonction navigate qui redirige vers ma page accueil
-                navigate('/Accueil');
+                navigate('/Accueil', {
+                    state: response.data
+                });
                 console.log("Connexion réussie : ", response.data);
             } else {
                 console.log("login / mdp pas bon chef");
